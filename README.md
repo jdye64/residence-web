@@ -1,10 +1,10 @@
 Installation
 
-   * sudo apt-get install twisted-python
-   * sudo apt-get install pip
-   * sudo pip install virtualenv
-   * sudo pip install virtualenvwrapper
-   * export WORKON_HOME=$HOME/.virtualenvs
-   * export PROJECT_HOME=$HOME/Devel
-   * source /usr/local/bin/virtualenvwrapper.sh
-   * mkvirtualenv dyer
+   * sudo apt-get update
+   * sudo apt-get install build-essential python-dev python-twisted python-pip
+   * sudo pip install virtualenv virtualenvwrapper
+   * echo "export WORKON_HOME=$HOME/.virtualenvs" >> ~/.profile
+   * echo "source /usr/local/bin/virtualenvwrapper.sh" >> ~/.profile
+   * source ~/.profile
+   * mkvirtualenv residence
+   * pip install crossbar
