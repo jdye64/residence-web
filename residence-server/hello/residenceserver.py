@@ -1,8 +1,7 @@
 from twisted.internet.defer import inlineCallbacks
 
-from autobahn.twisted.util import sleep
 from autobahn.twisted.wamp import ApplicationSession
-from autobahn.wamp.exception import ApplicationError
+from autobahn.wamp.types import RegisterOptions
 from RPi import RPi
 import jsonpickle
 
@@ -49,5 +48,19 @@ class AppSession(ApplicationSession):
         yield self.register(turnoff, 'com.jeremydyer.gpio.turnoff')
         print("procedure turnoff() registered")
 
-    def onDisconnect(self):
-        print "Client has disconnected itself from the session!"
+        ## session metaevents: these are fired by Crossbar.io
+        ## upon _other_ WAMP sessions joining/leaving the router
+        ##
+
+        @inlineCallbacks
+        def on_session_join(details):
+            print("on_session_join: {}".format(details))
+
+        yield self.subscribe(on_session_join, 'wamp.metaevent.session.on_join')
+
+
+        @inlineCallbacks
+        def on_session_leave(details):
+            print("on_session_leave: {}".format(details))
+
+        yield self.subscribe(on_session_leave, 'wamp.metaevent.session.on_leave')
