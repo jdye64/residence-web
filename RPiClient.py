@@ -1,44 +1,25 @@
-from autobahn.twisted.websocket import WebSocketClientProtocol, WebSocketClientFactory
+from twisted.internet.defer import inlineCallbacks
 
-class MyClientProtocol(WebSocketClientProtocol):
-
-   def onConnect(self, response):
-      print("Server connected: {0}".format(response.peer))
-
-   def onOpen(self):
-       print "Connection opened!"
-      # print("WebSocket connection open.")
-      #
-      # def hello():
-      #    self.sendMessage(u"Hello, world!".encode('utf8'))
-      #    self.sendMessage(b"\x00\x01\x03\x04", isBinary = True)
-      #    self.factory.reactor.callLater(1, hello)
-      #
-      # ## start sending messages every second ..
-      # hello()
-
-   def onMessage(self, payload, isBinary):
-      if isBinary:
-         print("Binary message received: {0} bytes".format(len(payload)))
-      else:
-         print("Text message received: {0}".format(payload.decode('utf8')))
-
-   def onClose(self, wasClean, code, reason):
-      print("WebSocket connection closed: {0}".format(reason))
+from autobahn.twisted.wamp import ApplicationSession
+from autobahn import wamp
 
 
+class Component(ApplicationSession):
+
+    @inlineCallbacks
+    def onJoin(self, details):
+        print("session attached")
+        yield self.register(self)
+
+    @wamp.subscribe(u'com.jeremydyer.gpio.turnon')
+    def turnOnOutlet(self):
+        print "Turning ON GPIO outlet"
+
+    @wamp.subscribe(u'com.jeremydyer.gpio.turnoff')
+    def turnOffOutlet(self):
+        print "Turning OFF GPIO outlet"
 
 if __name__ == '__main__':
-
-   import sys
-
-   from twisted.python import log
-   from twisted.internet import reactor
-
-   log.startLogging(sys.stdout)
-
-   factory = WebSocketClientFactory("ws://127.0.0.1:8080/ws", debug=True)
-   factory.protocol = MyClientProtocol
-
-   reactor.connectTCP("127.0.0.1", 8080, factory)
-   reactor.run()
+    from autobahn.twisted.wamp import ApplicationRunner
+    runner = ApplicationRunner("ws://10.0.1.51:8080/ws", "realm1", extra={'authmethods': ['ticket'], 'authid': 'jdye64'})
+    runner.run(Component)
