@@ -28,6 +28,9 @@ class RPiComponent(ApplicationSession):
         #Now that all of the registration has occured call back and give the list of subscriptions you have
         self.deviceRegUID = yield self.call('com.jeremydyer.residence.rpi.join', rpi.to_json())
 
+        #Publish a message letting all connected devices know that a newly connected device is now available
+        yield self.publish('com.jeremydyer.residence.rpi.join.notify', rpi.to_json())
+
     @inlineCallbacks
     def turn_on_outlet(self, powerOutDesc):
         print "Turning ON GPIO outlet"
