@@ -28,7 +28,7 @@ class DeviceRegistry:
         self.rpiDevices.remove(rpi)
 
     def getUid(self):
-        val = self.uid;
+        val = self.uid
         self.uid += 1
         return val
 
@@ -67,7 +67,7 @@ class RPiDeviceRegistryComponent(ApplicationSession):
 
     @inlineCallbacks
     def onJoin(self, details):
-        print "DeviceRegistryComponent is online"
+        print "RPiDeviceRegistryComponent is online"
         yield self.register(self)
         yield self.subscribe(self)
 
@@ -109,4 +109,4 @@ class RPiDeviceRegistryComponent(ApplicationSession):
 
 if __name__ == '__main__':
     runner = ApplicationRunner("ws://127.0.0.1:8080/ws", "realm1")
-    runner.run(DeviceRegistryComponent)
+    runner.run(RPiDeviceRegistryComponent)
