@@ -53,7 +53,7 @@
          "components": [
             {
                "type": "class",
-               "classname": "hello.residenceserver.AppSession",
+               "classname": "registry.rpideviceregistry.RPiDeviceRegistryComponent",
                "realm": "realm1",
                "transport": {
                   "type": "websocket",

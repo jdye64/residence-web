@@ -62,7 +62,7 @@ class DeviceRegistry:
 
 
 
-class DeviceRegistryComponent(ApplicationSession):
+class RPiDeviceRegistryComponent(ApplicationSession):
 
     devReg = DeviceRegistry()
 
