@@ -8,6 +8,12 @@ from autobahn import wamp
 import jsonpickle
 from autobahn.twisted.util import sleep
 
+# def load_src(name, fpath):
+#     import os, imp
+#     return imp.load_source(name, os.path.join(os.path.dirname(__file__), fpath))
+#
+# load_src("gpio", "../../common/gpio.py")
+# from gpio import RPiHeartBeat
 
 # Registry that holds all of the information about the connected devices
 class DeviceRegistry:
