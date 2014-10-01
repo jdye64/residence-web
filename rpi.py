@@ -1,12 +1,13 @@
 # Component for controlling a Raspberry PI device connected to the Residence session
 
-from twisted.internet.defer import inlineCallbacks
+import time
 
+from twisted.internet.defer import inlineCallbacks
 from autobahn.twisted.wamp import ApplicationSession, ApplicationRunner
 from autobahn.twisted.util import sleep
-from gpio import RPi, RPiHeartBeat
-import time
 import jsonpickle
+
+from common.gpio import RPi, RPiHeartBeat
 
 
 class RPiComponent(ApplicationSession):

@@ -1,12 +1,11 @@
 # Component for keeping track of the connected devices to the Residence application
 
-from twisted.internet.defer import inlineCallbacks
+import time
 
+from twisted.internet.defer import inlineCallbacks
 from autobahn.twisted.wamp import ApplicationSession, ApplicationRunner
 from autobahn import wamp
-from gpio import RPi, RPiHeartBeat
 import jsonpickle
-import time
 from autobahn.twisted.util import sleep
 
 
