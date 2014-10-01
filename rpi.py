@@ -3,8 +3,10 @@
 from twisted.internet.defer import inlineCallbacks
 
 from autobahn.twisted.wamp import ApplicationSession, ApplicationRunner
-from autobahn import wamp
-from gpio import RPi, Outlet
+from autobahn.twisted.util import sleep
+from gpio import RPi, RPiHeartBeat
+import time
+import jsonpickle
 
 
 class RPiComponent(ApplicationSession):
@@ -12,6 +14,7 @@ class RPiComponent(ApplicationSession):
     #Unique identifier for this device that will be used to register all of its RPC and Events.
     deviceRegUID = None
     rpiDevices = []
+    heartbeatinterval = 5   #Measured in seconds
 
     @inlineCallbacks
     def onJoin(self, details):
@@ -30,6 +33,15 @@ class RPiComponent(ApplicationSession):
 
         #Publish a message letting all connected devices know that a newly connected device is now available
         yield self.publish('com.jeremydyer.residence.rpi.join.notify', rpi.to_json())
+
+        #Creates the heartbeat object that
+        heartbeat = RPiHeartBeat(rpi.uid)
+
+        #Creates an infinite loop to post the heartbeat back to the device registry.
+        while True:
+            heartbeat.timestamp = time.time()
+            yield self.publish(u'com.jeremydyer.residence.rpi.heartbeat', jsonpickle.encode(heartbeat))
+            yield sleep(self.heartbeatinterval)
 
     @inlineCallbacks
     def turn_on_outlet(self, powerOutDesc):

@@ -2,6 +2,17 @@
 import jsonpickle
 import subprocess
 import os
+import time
+
+#Defines the heartbeat object that will be published by each connected RPi device
+class RPiHeartBeat:
+
+    timestamp = None
+    uid = None
+
+    def __init__(self, uid):
+        self.timestamp = time.time()
+        self.uid = uid
 
 class RPi:
 
@@ -11,6 +22,7 @@ class RPi:
     gpioPorts = []
     turnOnOutletRPC = None
     turnOffOutletRPC = None
+    lastheartbeat = None
 
     def __init__(self, uid):
         self.uid = uid
