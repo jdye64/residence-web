@@ -9,6 +9,17 @@ import jsonpickle
 
 from gpio import RPi, RPiHeartBeat
 
+try:
+    import RPi.GPIO as GPIO
+except RuntimeError:
+    print("Error importing RPi.GPIO! This is probably because you need superuser privileges."
+          "You can achieve this by using 'sudo' to run your script")
+
+gpio_mode = GPIO.BOARD
+board_gpio_channels = [7, 11, 12, 13, 15, 16, 18, 22]
+
+GPIO_OFF = 0
+GPIO_ON = 1
 
 class RPiComponent(ApplicationSession):
 
@@ -19,6 +30,7 @@ class RPiComponent(ApplicationSession):
 
     @inlineCallbacks
     def onJoin(self, details):
+        GPIO.setmode(gpio_mode)
         self.deviceRegUID = yield self.call('com.jeremydyer.residence.rpi.join.request')
         print "Device Registry Unique Identifier -> " + str(self.deviceRegUID)
 
@@ -59,12 +71,14 @@ class RPiComponent(ApplicationSession):
         print "Turning ON GPIO outlet"
         print "Must perform the actual GPIO commands here on the RPi device ..."
         print portNumber
+        GPIO.output(board_gpio_channels[portNumber], GPIO_ON)
         yield self.publish('com.jeremydyer.residence.rpi.outlet.update', 'RaspberryPI GPIO outlet has been turned ON')
 
     @inlineCallbacks
     def turn_off_outlet(self, portNumber):
         print "Turning OFF GPIO outlet"
         print portNumber
+        GPIO.output(board_gpio_channels[portNumber], GPIO_OFF)
         yield self.publish('com.jeremydyer.residence.rpi.outlet.update', 'RaspberryPI GPIO outlet has been turned OFF')
 
 if __name__ == '__main__':
