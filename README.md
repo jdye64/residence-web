@@ -11,6 +11,7 @@ Installation
 
    FOR RASPBERRY PI DEVICE ONLY
    * pip install rpi.gpio
+   * For running as sudo with virtualenv ```sudo /home/pi/.virtualenvs/residence/bin/python rpi.py```
    
 About
 
