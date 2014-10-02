@@ -15,12 +15,6 @@ except RuntimeError:
     print("Error importing RPi.GPIO! This is probably because you need superuser privileges."
           "You can achieve this by using 'sudo' to run your script")
 
-gpio_mode = GPIO.BOARD
-board_gpio_channels = [7, 11, 12, 13, 15, 16, 18, 22]
-
-GPIO_OFF = False
-GPIO_ON = True
-
 class RPiComponent(ApplicationSession):
 
     #Unique identifier for this device that will be used to register all of its RPC and Events.
@@ -28,9 +22,18 @@ class RPiComponent(ApplicationSession):
     rpi = None
     heartbeatinterval = 5   #Measured in seconds
 
+    gpio_mode = GPIO.BOARD
+    board_gpio_channels = [7, 11, 12, 13, 15, 16, 18, 22]
+
+    GPIO_OFF = True
+    GPIO_ON = False
+
     @inlineCallbacks
     def onJoin(self, details):
-        GPIO.setmode(gpio_mode)
+        GPIO.setmode(self.gpio_mode)
+        for channel in self.board_gpio_channels:
+            GPIO.output(channel, self.GPIO_OFF)
+
         self.deviceRegUID = yield self.call('com.jeremydyer.residence.rpi.join.request')
         print "Device Registry Unique Identifier -> " + str(self.deviceRegUID)
 
@@ -70,15 +73,15 @@ class RPiComponent(ApplicationSession):
     def turn_on_outlet(self, portNumber):
         print "Turning ON GPIO outlet"
         print "Must perform the actual GPIO commands here on the RPi device ..."
-        print "PortNumber " + str(portNumber) + " Channel mapped to " + str(board_gpio_channels[portNumber])
-        GPIO.output(board_gpio_channels[portNumber], GPIO_ON)
+        print "PortNumber " + str(portNumber) + " Channel mapped to " + str(self.board_gpio_channels[portNumber])
+        GPIO.output(self.board_gpio_channels[portNumber], self.GPIO_ON)
         yield self.publish('com.jeremydyer.residence.rpi.outlet.update.dummy', 'RaspberryPI GPIO outlet has been turned ON')
 
     @inlineCallbacks
     def turn_off_outlet(self, portNumber):
         print "Turning OFF GPIO outlet"
-        print "PortNumber " + str(portNumber) + " Channel mapped to " + str(board_gpio_channels[portNumber])
-        GPIO.output(board_gpio_channels[portNumber], GPIO_OFF)
+        print "PortNumber " + str(portNumber) + " Channel mapped to " + str(self.board_gpio_channels[portNumber])
+        GPIO.output(self.board_gpio_channels[portNumber], self.GPIO_OFF)
         yield self.publish('com.jeremydyer.residence.rpi.outlet.update.dummy', 'RaspberryPI GPIO outlet has been turned OFF')
 
 if __name__ == '__main__':
