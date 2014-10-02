@@ -32,6 +32,7 @@ class RPiComponent(ApplicationSession):
     def onJoin(self, details):
         GPIO.setmode(self.gpio_mode)
         for channel in self.board_gpio_channels:
+            GPIO.setup(channel, GPIO.OUT)
             GPIO.output(channel, self.GPIO_OFF)
 
         self.deviceRegUID = yield self.call('com.jeremydyer.residence.rpi.join.request')
