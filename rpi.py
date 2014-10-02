@@ -18,8 +18,8 @@ except RuntimeError:
 gpio_mode = GPIO.BOARD
 board_gpio_channels = [7, 11, 12, 13, 15, 16, 18, 22]
 
-GPIO_OFF = 0
-GPIO_ON = 1
+GPIO_OFF = False
+GPIO_ON = True
 
 class RPiComponent(ApplicationSession):
 
@@ -70,7 +70,7 @@ class RPiComponent(ApplicationSession):
     def turn_on_outlet(self, portNumber):
         print "Turning ON GPIO outlet"
         print "Must perform the actual GPIO commands here on the RPi device ..."
-        print portNumber
+        print "PortNumber " + str(portNumber) + " Channel mapped to " + str(board_gpio_channels[portNumber])
         GPIO.output(board_gpio_channels[portNumber], GPIO_ON)
         yield self.publish('com.jeremydyer.residence.rpi.outlet.update.dummy', 'RaspberryPI GPIO outlet has been turned ON')
 
