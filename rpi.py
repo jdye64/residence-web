@@ -72,14 +72,14 @@ class RPiComponent(ApplicationSession):
         print "Must perform the actual GPIO commands here on the RPi device ..."
         print portNumber
         GPIO.output(board_gpio_channels[portNumber], GPIO_ON)
-        yield self.publish('com.jeremydyer.residence.rpi.outlet.update', 'RaspberryPI GPIO outlet has been turned ON')
+        yield self.publish('com.jeremydyer.residence.rpi.outlet.update.dummy', 'RaspberryPI GPIO outlet has been turned ON')
 
     @inlineCallbacks
     def turn_off_outlet(self, portNumber):
         print "Turning OFF GPIO outlet"
-        print portNumber
+        print "PortNumber " + str(portNumber) + " Channel mapped to " + str(board_gpio_channels[portNumber])
         GPIO.output(board_gpio_channels[portNumber], GPIO_OFF)
-        yield self.publish('com.jeremydyer.residence.rpi.outlet.update', 'RaspberryPI GPIO outlet has been turned OFF')
+        yield self.publish('com.jeremydyer.residence.rpi.outlet.update.dummy', 'RaspberryPI GPIO outlet has been turned OFF')
 
 if __name__ == '__main__':
     runner = ApplicationRunner("ws://10.0.1.49:8080/ws", "realm1")

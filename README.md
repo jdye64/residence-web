@@ -8,6 +8,9 @@ Installation
    * source ~/.profile
    * mkvirtualenv residence
    * pip install crossbar
+
+   FOR RASPBERRY PI DEVICE ONLY
+   * pip install rpi.gpio
    
 About
 
