@@ -25,6 +25,7 @@ class DeviceRegistry:
 
     def __init__(self):
         self.rpiDevices = []
+        print "Created a new DeviceRegistry instance!!!!!!"
 
     def registerRPiDevice(self, rpiJson):
         self.rpiDevices.append(jsonpickle.decode(rpiJson))
@@ -32,6 +33,12 @@ class DeviceRegistry:
     def removeRPiFromRegistryByUid(self, uid):
         rpi = self.findRPiDeviceByUID(uid)
         self.rpiDevices.remove(rpi)
+
+    def updateRPi(self, updatedRPi):
+        for index, rpi in enumerate(self.rpiDevices):
+            if rpi.uid == updatedRPi.uid:
+                self.rpiDevices[index] = updatedRPi
+                break
 
     def getUid(self):
         val = self.uid
@@ -105,12 +112,23 @@ class RPiDeviceRegistryComponent(ApplicationSession):
     #Returns the list RPi Devices to the requesting client
     @wamp.register(u'com.jeremydyer.residence.rpi.list')
     def list_rpi_devices(self):
-        return jsonpickle.encode(self.devReg.rpiDevices)
+        responseJson = jsonpickle.encode(self.devReg.rpiDevices)
+        print responseJson
+        return responseJson
 
     #Listens for the RPi device heartbeats
     @wamp.subscribe(u'com.jeremydyer.residence.rpi.heartbeat')
     def heartbeat_listen(self, heartbeat):
         self.devReg.updateHeartbeat(jsonpickle.decode(heartbeat))
+
+    #Listens for the update event from the RPi device and replaces the value in the registry with the new value
+    @wamp.subscribe(u'com.jeremydyer.residence.rpi.update.notify')
+    def update_listen(self, updatedRpiJson):
+        updatedRpi = jsonpickle.decode(updatedRpiJson)
+        print "updated rpi"
+        print updatedRpiJson
+        self.devReg.updateRPi(updatedRpi)
+        print "RPi device has been updated in the registry!"
 
 
 if __name__ == '__main__':

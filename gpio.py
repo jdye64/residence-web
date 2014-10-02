@@ -19,26 +19,27 @@ class RPi:
     uid = None
     ip = None
     secretKey = None
-    gpioPorts = []
+    outlets = []
     turnOnOutletRPC = None
     turnOffOutletRPC = None
+    updateDeviceRPC = None
     lastheartbeat = None
 
     def __init__(self, uid):
         self.uid = uid
         self.ip = "10.0.1.52"
         self.secretKey = "123456789qazwsx"
-        self.gpioPorts = []
+        self.outlets = []
         self.turnOffOutletRPC = None
         self.turnOffOutletRPC = None
-        self.gpioPorts.append(GPIO(1))
-        self.gpioPorts.append(GPIO(2))
-        self.gpioPorts.append(GPIO(3))
-        self.gpioPorts.append(GPIO(4))
-        self.gpioPorts.append(GPIO(5))
-        self.gpioPorts.append(GPIO(6))
-        self.gpioPorts.append(GPIO(7))
-        self.gpioPorts.append(GPIO(8))
+        self.outlets.append(GPIO(0))
+        self.outlets.append(GPIO(1))
+        self.outlets.append(GPIO(2))
+        self.outlets.append(GPIO(3))
+        self.outlets.append(GPIO(4))
+        self.outlets.append(GPIO(5))
+        self.outlets.append(GPIO(6))
+        self.outlets.append(GPIO(7))
 
     def from_json(self, jsonData):
         data = jsonpickle.decode(jsonData)
@@ -51,13 +52,13 @@ class RPi:
 class GPIO:
 
     portsNumber = None
-    on = False
-    outletDesc = None
+    on = 0
+    outletDescription = None
 
     def __init__(self, portNum):
         self.portNumber = portNum
-        self.on = False
-        self.outletDesc = "Test Description " + str(portNum)
+        self.on = 0
+        self.outletDescription = "Test Description " + str(portNum)
 
     def to_json(self):
         return jsonpickle.encode(self)
@@ -81,16 +82,17 @@ class GPIO:
 #     def to_json(self):
 #         return jsonpickle.encode(self)
 
-
-class Outlet:
-
-    outlet_id = 0
-    gpioPort = 0
-    description = ''
-    on = False
-
-    def __init___(self, outlet_id):
-        self.outlet_id = outlet_id
+#
+# class Outlet:
+#
+#     outlet_id = 0
+#     gpioPort = 0
+#     description = ''
+#     on = True
+#
+#     def __init___(self, outlet_id):
+#         self.outlet_id = outlet_id
+#         self.on = True
 
 
 class RPi_Info:
