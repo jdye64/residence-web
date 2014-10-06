@@ -86,5 +86,5 @@ class RPiComponent(ApplicationSession):
         yield self.publish('com.jeremydyer.residence.rpi.outlet.update.dummy', 'RaspberryPI GPIO outlet has been turned OFF')
 
 if __name__ == '__main__':
-    runner = ApplicationRunner("ws://10.0.1.49:8080/ws", "realm1")
+    runner = ApplicationRunner("ws://pi.jeremydyer.me:9000/ws", "realm1")
     runner.run(RPiComponent)

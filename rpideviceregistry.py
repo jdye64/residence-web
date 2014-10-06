@@ -132,5 +132,5 @@ class RPiDeviceRegistryComponent(ApplicationSession):
 
 
 if __name__ == '__main__':
-    runner = ApplicationRunner("ws://127.0.0.1:8080/ws", "realm1")
+    runner = ApplicationRunner("ws://pi.jeremydyer.me:9000/ws", "realm1")
     runner.run(RPiDeviceRegistryComponent)
