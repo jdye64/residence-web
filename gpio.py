@@ -51,9 +51,7 @@ class RPi:
         self.uid = uid
 
     def from_json(self, jsonData):
-        data = jsonpickle.decode(jsonData)
-        self = data
-        return data
+        self = jsonpickle.decode(jsonData)
 
     def to_json(self):
         return jsonpickle.encode(self)
@@ -74,9 +72,7 @@ class RPi:
         if os.path.exists('/home/pi/.residence/GPIOConfig.json'):
             f = open('/home/pi/.residence/GPIOConfig.json')
             json_data = f.read()
-            pprint(json_data)
-            self = jsonpickle.decode(json_data)
-            pprint(self)
+            self.from_json(json_data)
             f.close()
             return True
         else:
