@@ -24,7 +24,7 @@ class RPiWebCamComponent(ApplicationSession):
         if not os.path.exists(self.image_dir):
             os.makedirs(self.image_dir)
 
-        cmd = "fswebcam -r 400x400 " + self.image_dir + "/image.jpg"
+        cmd = "fswebcam -r 352x288 " + self.image_dir + "/image.jpg"
         os.system(cmd)
 
         fd = open(self.image_dir + "/this.jpg", "rb")
