@@ -17,11 +17,11 @@ class RPiWebCamComponent(ApplicationSession):
     def take_snapshot(self):
 
         print "Taking snapshot image"
-        os.makedirs('/home/pi/images')
-        cmd = "fswebcam -r 400x400 /home/pi/images/image.jpg"
-        os.system(cmd)
+        # os.makedirs('/home/pi/images')
+        # cmd = "fswebcam -r 400x400 /home/pi/images/image.jpg"
+        # os.system(cmd)
 
-        fd = open("/home/pi/images/image.jpg", "rb")
+        fd = open("/home/pi/images/this.jpg", "rb")
         #fd = open("/home/pi/moose.jpg")
         encoded_string = base64.b64encode(fd.read())
         return {"image": encoded_string}
