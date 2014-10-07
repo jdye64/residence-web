@@ -18,6 +18,7 @@ class RPi:
 
     uid = None
     ip = None
+    eth0_mac = None
     secretKey = None
     outlets = []
     turnOnOutletRPC = None
@@ -26,8 +27,12 @@ class RPi:
     lastheartbeat = None
 
     def __init__(self, uid):
+        #Creates an instance of RPi_Info
+        rpiInfo = RPi_Info()
+
         self.uid = uid
-        self.ip = "10.0.1.52"
+        self.ip = rpiInfo.get_ipaddress()
+        self.eth0_mac = rpiInfo.getMAC("eth0")
         self.secretKey = "123456789qazwsx"
         self.outlets = []
         self.turnOffOutletRPC = None
@@ -48,6 +53,12 @@ class RPi:
     def to_json(self):
         return jsonpickle.encode(self)
 
+    def save(self):
+        print "Saving RPi file"
+
+    def load(self):
+        print "Loading RPi information from the filesystem"
+
 # Defines a generic GPIO outlet on a raspberry pi device
 class GPIO:
 
@@ -62,37 +73,6 @@ class GPIO:
 
     def to_json(self):
         return jsonpickle.encode(self)
-
-# class RPi:
-#
-#     ip = None
-#     ram = None
-#     cpuspeed = None
-#     temperature = None
-#     processcount = None
-#
-#     def __init__(self):
-#         pi = RPi_Info()
-#         self.ip = pi.get_ipaddress()
-#         self.ram = pi.get_ram()
-#         self.cpuspeed = pi.get_cpu_speed()
-#         self.temperature = pi.get_temperature()
-#         self.processcount = pi.get_process_count()
-#
-#     def to_json(self):
-#         return jsonpickle.encode(self)
-
-#
-# class Outlet:
-#
-#     outlet_id = 0
-#     gpioPort = 0
-#     description = ''
-#     on = True
-#
-#     def __init___(self, outlet_id):
-#         self.outlet_id = outlet_id
-#         self.on = True
 
 
 class RPi_Info:
@@ -148,6 +128,14 @@ class RPi_Info:
         split_data = data[0].split()
         ipaddr = split_data[split_data.index('src') + 1]
         return ipaddr
+
+    def getmac(interface):
+        # Return the MAC address of interface
+        try:
+            str = open('/sys/class/net/%s/address', interface).readline()
+        except:
+            str = "00:00:00:00:00:00"
+        return str[0:17]
 
     def get_cpu_speed(self):
         f = os.popen('/opt/vc/bin/vcgencmd get_config arm_freq')
