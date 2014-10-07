@@ -3,7 +3,6 @@ import jsonpickle
 import subprocess
 import os
 import time
-import json
 from pprint import pprint
 import os.path
 
@@ -53,7 +52,7 @@ class RPi:
 
     def from_json(self, jsonData):
         data = jsonpickle.decode(jsonData)
-        print data
+        self = data
         return data
 
     def to_json(self):
@@ -76,8 +75,8 @@ class RPi:
             f = open('/home/pi/.residence/GPIOConfig.json')
             json_data = f.read()
             pprint(json_data)
-            data = jsonpickle.decode(json_data)
-            pprint(data)
+            self = jsonpickle.decode(json_data)
+            pprint(self)
             f.close()
             return True
         else:
