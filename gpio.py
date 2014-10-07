@@ -61,24 +61,24 @@ class RPi:
     def save(self):
         print "Saving RPi file"
 
-        if not os.path.exists('~/.residence'):
-            os.makedirs('~/.residence')
+        if not os.path.exists('/home/pi/.residence'):
+            os.makedirs('/home/pi/.residence')
 
-        f = open('~/.residence/GPIOConfig.json', 'w')
+        f = open('/home/pi/.residence/GPIOConfig.json', 'w')
         json_data = self.to_json()
         pprint(json_data)
         f.write(json_data)
         f.close()
 
     def load(self):
-        if os.path.exists('~/.residence/GPIOConfig.json'):
-            json_data = open('~/.residence/GPIOConfig.json')
+        if os.path.exists('/home/pi/.residence/GPIOConfig.json'):
+            json_data = open('/home/pi/.residence/GPIOConfig.json')
             data = self.from_json(json_data)
             pprint(data)
             json_data.close()
             return True
         else:
-            print "~/.residence/GPIOConfig.json RPi information file does not exist!"
+            print "/home/pi/.residence/GPIOConfig.json RPi information file does not exist!"
             return False
 
 # Defines a generic GPIO outlet on a raspberry pi device
