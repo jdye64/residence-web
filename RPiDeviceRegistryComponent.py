@@ -1,4 +1,4 @@
-# Component for keeping track of the connected devices to the Residence application
+# Component for keeping track of the online RPi Devices in the session.
 
 import time
 

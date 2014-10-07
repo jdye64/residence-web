@@ -1,4 +1,4 @@
-# Component for controlling a Raspberry PI device connected to the Residence session
+# Component for controlling a Raspberry PI GPIO ports for devices connected to the session.
 
 import time
 
