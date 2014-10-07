@@ -32,6 +32,8 @@ class RPi:
         #Creates an instance of RPi_Info
         rpiInfo = RPi_Info()
 
+        self.uid = uid
+
         # Attempts to load a previous instance from the filesystem.
         if self.load():
             print "Successfully loaded the GPIO Configuration"
@@ -47,8 +49,6 @@ class RPi:
 
             # Saves/Creates the current randomish configuration
             self.save()
-
-        self.uid = uid
 
     def from_json(self, jsonData):
         self = jsonpickle.decode(jsonData)
@@ -72,7 +72,7 @@ class RPi:
         if os.path.exists('/home/pi/.residence/GPIOConfig.json'):
             f = open('/home/pi/.residence/GPIOConfig.json')
             json_data = f.read()
-            self.from_json(json_data)
+            self = jsonpickle.decode(json_data)
             f.close()
             return True
         else:
