@@ -11,7 +11,7 @@ Installation
 
    FOR RASPBERRY PI DEVICE ONLY
    * pip install rpi.gpio
-   * For running as sudo with virtualenv ```sudo /home/pi/.virtualenvs/residence/bin/python rpi.py```
+   * For running as sudo with virtualenv ```sudo /home/pi/.virtualenvs/residence/bin/python RPiGPIOComponent.py```
    
 About
 
@@ -22,3 +22,6 @@ components in the Residence session.
 like IOS or Android devices can connect and ask for the complete list of devices they may control.
 2) rpi.py - This component runs on a Raspberry PI and allows for controlling several functions on the Raspberry PI itself
 or other devices connected to the RPi device like a power outlet bank or something else like a camera.
+3) RPiWebCamComponent.py - This componenet is used to get images and video from a USB camera attached to the RPi device.
+Required packages to use the camera software are ```sudo apt-get install fswebcam``` URL with some documentation can be
+found here ```http://www.raspberrypi.org/documentation/usage/webcams/```
