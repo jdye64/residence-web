@@ -25,3 +25,11 @@ or other devices connected to the RPi device like a power outlet bank or somethi
 3) RPiWebCamComponent.py - This componenet is used to get images and video from a USB camera attached to the RPi device.
 Required packages to use the camera software are ```sudo apt-get install fswebcam``` URL with some documentation can be
 found here ```http://www.raspberrypi.org/documentation/usage/webcams/```
+4) RPiAudioPlaybackComponent.py - This component is used to playback audio files from a RPi device. The componet will play
+the sound using the speakers connected to the RPi device. This could either be 3.5mm headphones speakers or that sound could
+go through the HDMI output to play on nicer speakers or through a TV.
+Required Software:
+```sudo apt-get install alsa-utils```
+```sudo apt-get install mpg321```
+```sudo modprobe snd_bcm2835```
+```sudo amixer cset numid=3 1```

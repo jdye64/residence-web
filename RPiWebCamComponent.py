@@ -18,8 +18,6 @@ class RPiWebCamComponent(ApplicationSession):
     @wamp.register(u'com.jeremydyer.residence.rpi.webcam.takesnapshot')
     def take_snapshot(self):
 
-        print "Taking snapshot image"
-
         #If the images directory does not exist then lets make it
         if not os.path.exists(self.image_dir):
             os.makedirs(self.image_dir)
