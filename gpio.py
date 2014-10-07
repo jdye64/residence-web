@@ -39,7 +39,7 @@ class RPi:
         else:
             print "Unable to load GPIO configuration. Creating new blank template and saving"
             self.ip = rpiInfo.get_ipaddress()
-            self.eth0_mac = rpiInfo.getMAC("eth0")
+            self.eth0_mac = rpiInfo.getmac("eth0")
             self.secretKey = "123456789qazwsx"
             self.outlets = []
             self.turnOffOutletRPC = None
