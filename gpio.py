@@ -28,6 +28,15 @@ class RPi:
     updateDeviceRPC = None
     lastheartbeat = None
 
+    # Metadata about the location of the RPi
+    city = None
+    state = None
+    zip = None
+    address1 = None
+    address2 = None
+    location_name = None    # Friendly name associated with the physical address of the device
+    room_name = None    # Friendly name associated with the room that the RPi is located in the physical address
+
     def __init__(self, uid):
         #Creates an instance of RPi_Info
         rpiInfo = RPi_Info()
@@ -44,14 +53,47 @@ class RPi:
             self.secretKey = "123456789qazwsx"
             self.outlets = []
             self.turnOffOutletRPC = None
-            self.turnOffOutletRPC = None
+            self.turnOnOutletRPC = None
             self.updateDeviceRPC = None
+            self.city = None
+            self.state = None
+            self.zip = None
+            self.address1 = None
+            self.address2 = None
+            self.location_name = None    # Friendly name associated with the physical address of the device
+            self.room_name = None # Friendly name associated with the room that the RPi is located in the physical address
 
-            # Saves/Creates the current randomish configuration
+            #Creates 8 filler GPIO outlets since all of the devices I have currently built are 8 outlets.
+            self.outlets.append(GPIO(0))
+            self.outlets.append(GPIO(1))
+            self.outlets.append(GPIO(2))
+            self.outlets.append(GPIO(3))
+            self.outlets.append(GPIO(4))
+            self.outlets.append(GPIO(5))
+            self.outlets.append(GPIO(6))
+            self.outlets.append(GPIO(7))
+
+            # Saves/Creates the current random-ish configuration
             self.save()
 
-    def from_json(self, jsonData):
-        self = jsonpickle.decode(jsonData)
+    def from_json(self, json_data):
+        saved_data = jsonpickle.decode(json_data)
+
+        self.eth0_mac = saved_data.eth0_mac
+        self.ip = saved_data.ip
+        self.lastheartbeat = saved_data.lastheartbeat
+        self.outlets = saved_data.outlets
+        self.secretKey = saved_data.secretkey
+        self.turnOffOutletRPC = saved_data.turnOffOutletRPC
+        self.turnOnOutletRPC = saved_data.turnOnOutletRPC
+        self.updateDeviceRPC = saved_data.updateDeviceRPC
+        self.city = saved_data.city
+        self.state = saved_data.state
+        self.zip = saved_data.zip
+        self.address1 = saved_data.address1
+        self.address2 = saved_data.address2
+        self.location_name = saved_data.location_name
+        self.room_name = saved_data.room_name
 
     def to_json(self):
         return jsonpickle.encode(self)
@@ -72,7 +114,7 @@ class RPi:
         if os.path.exists('/home/pi/.residence/GPIOConfig.json'):
             f = open('/home/pi/.residence/GPIOConfig.json')
             json_data = f.read()
-            self = jsonpickle.decode(json_data)
+            self.from_json(json_data)
             f.close()
             return True
         else:
@@ -90,6 +132,12 @@ class GPIO:
         self.portNumber = portNum
         self.on = 0
         self.outletDescription = "Test Description " + str(portNum)
+
+    def from_json(self, json_data):
+        saved_data = jsonpickle.decode(json_data)
+        self.portsNumber = saved_data.portsNumber
+        self.on = saved_data.on
+        self.outletDescription = saved_data.outletDescription
 
     def to_json(self):
         return jsonpickle.encode(self)
