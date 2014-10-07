@@ -7,6 +7,8 @@ import os
 
 class RPiWebCamComponent(ApplicationSession):
 
+    image_dir = '/home/pi/images'
+
     @inlineCallbacks
     def onJoin(self, details):
         print "RPiWebCamComponent is online!"
@@ -17,12 +19,15 @@ class RPiWebCamComponent(ApplicationSession):
     def take_snapshot(self):
 
         print "Taking snapshot image"
-        # os.makedirs('/home/pi/images')
-        # cmd = "fswebcam -r 400x400 /home/pi/images/image.jpg"
-        # os.system(cmd)
 
-        fd = open("/home/pi/images/this.jpg", "rb")
-        #fd = open("/home/pi/moose.jpg")
+        #If the images directory does not exist then lets make it
+        if not os.path.exists(self.image_dir):
+            os.makedirs(self.image_dir)
+
+        cmd = "fswebcam -r 400x400 " + self.image_dir + "/image.jpg"
+        os.system(cmd)
+
+        fd = open(self.image_dir + "/this.jpg", "rb")
         encoded_string = base64.b64encode(fd.read())
         return {"image": encoded_string}
 
