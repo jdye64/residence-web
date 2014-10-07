@@ -3,6 +3,9 @@ import jsonpickle
 import subprocess
 import os
 import time
+import json
+from pprint import pprint
+import os.path
 
 #Defines the heartbeat object that will be published by each connected RPi device
 class RPiHeartBeat:
@@ -30,21 +33,23 @@ class RPi:
         #Creates an instance of RPi_Info
         rpiInfo = RPi_Info()
 
+        # Attempts to load a previous instance from the filesystem.
+        if self.load():
+            print "Successfully loaded the GPIO Configuration"
+        else:
+            print "Unable to load GPIO configuration. Creating new blank template and saving"
+            self.ip = rpiInfo.get_ipaddress()
+            self.eth0_mac = rpiInfo.getMAC("eth0")
+            self.secretKey = "123456789qazwsx"
+            self.outlets = []
+            self.turnOffOutletRPC = None
+            self.turnOffOutletRPC = None
+            self.updateDeviceRPC = None
+
+            # Saves/Creates the current randomish configuration
+            self.save()
+
         self.uid = uid
-        self.ip = rpiInfo.get_ipaddress()
-        self.eth0_mac = rpiInfo.getMAC("eth0")
-        self.secretKey = "123456789qazwsx"
-        self.outlets = []
-        self.turnOffOutletRPC = None
-        self.turnOffOutletRPC = None
-        self.outlets.append(GPIO(0))
-        self.outlets.append(GPIO(1))
-        self.outlets.append(GPIO(2))
-        self.outlets.append(GPIO(3))
-        self.outlets.append(GPIO(4))
-        self.outlets.append(GPIO(5))
-        self.outlets.append(GPIO(6))
-        self.outlets.append(GPIO(7))
 
     def from_json(self, jsonData):
         data = jsonpickle.decode(jsonData)
@@ -56,8 +61,25 @@ class RPi:
     def save(self):
         print "Saving RPi file"
 
+        if not os.path.exists('~/.residence'):
+            os.makedirs('~/.residence')
+
+        f = open('~/.residence/GPIOConfig.json', 'w')
+        json_data = self.to_json()
+        pprint(json_data)
+        f.write(json_data)
+        f.close()
+
     def load(self):
-        print "Loading RPi information from the filesystem"
+        if os.path.exists('~/.residence/GPIOConfig.json'):
+            json_data = open('~/.residence/GPIOConfig.json')
+            data = self.from_json(json_data)
+            pprint(data)
+            json_data.close()
+            return True
+        else:
+            print "~/.residence/GPIOConfig.json RPi information file does not exist!"
+            return False
 
 # Defines a generic GPIO outlet on a raspberry pi device
 class GPIO:
