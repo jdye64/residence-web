@@ -74,7 +74,8 @@ class RPi:
     def load(self):
         if os.path.exists('/home/pi/.residence/GPIOConfig.json'):
             json_data = open('/home/pi/.residence/GPIOConfig.json')
-            data = self.from_json(json_data)
+            pprint(json_data)
+            data = jsonpickle.decode(json_data)
             pprint(data)
             json_data.close()
             return True
