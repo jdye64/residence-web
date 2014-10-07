@@ -151,7 +151,7 @@ class RPi_Info:
         ipaddr = split_data[split_data.index('src') + 1]
         return ipaddr
 
-    def getmac(interface):
+    def getmac(self, interface):
         # Return the MAC address of interface
         try:
             str = open('/sys/class/net/%s/address', interface).readline()
