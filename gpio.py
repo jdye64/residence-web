@@ -78,7 +78,7 @@ class RPi:
             pprint(json_data)
             data = jsonpickle.decode(json_data)
             pprint(data)
-            json_data.close()
+            f.close()
             return True
         else:
             print "/home/pi/.residence/GPIOConfig.json RPi information file does not exist!"
