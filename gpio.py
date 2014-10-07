@@ -54,6 +54,7 @@ class RPi:
     def from_json(self, jsonData):
         data = jsonpickle.decode(jsonData)
         print data
+        return data
 
     def to_json(self):
         return jsonpickle.encode(self)
