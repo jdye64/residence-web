@@ -83,7 +83,7 @@ class RPi:
         self.ip = saved_data.ip
         self.lastheartbeat = saved_data.lastheartbeat
         self.outlets = saved_data.outlets
-        self.secretKey = saved_data.secretkey
+        self.secretKey = saved_data.secretKey
         self.turnOffOutletRPC = saved_data.turnOffOutletRPC
         self.turnOnOutletRPC = saved_data.turnOnOutletRPC
         self.updateDeviceRPC = saved_data.updateDeviceRPC
