@@ -24,11 +24,13 @@ class RPiAudioPlaybackComponent(ApplicationSession):
         destfile = '/home/pi/.audio/' + timestamp + ".wav"
 
         downloadcmd = "wget " + sourceURL + " -p " + destfile
+        print "Running download cmd " + downloadcmd
         os.system(downloadcmd)
+        print "S3 download is complete"
 
         os.system('mpg123 ' + destfile + ' &')
         os.remove(destfile)
-
+        print "Removed cache S3 file"
 
 if __name__ == '__main__':
     runner = ApplicationRunner("ws://pi.jeremydyer.me:9000/ws", "realm1")
