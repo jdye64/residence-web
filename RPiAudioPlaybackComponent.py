@@ -20,7 +20,7 @@ class LocalAudioCacheStore:
         # Create the in-memory cache from all of the files already in the directory.
         for file in os.listdir(self.cache_dir):
             print "File " + str(file)
-            self.cachedFilesMap[self.s3url + file] = file
+            self.cachedFilesMap[self.s3url + file] = self.cache_dir + file
 
     def play_cached_file(self, url):
         cache_file = self.cachedFilesMap.get(url)
