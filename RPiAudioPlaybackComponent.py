@@ -2,6 +2,7 @@
 from twisted.internet.defer import inlineCallbacks
 from autobahn.twisted.wamp import ApplicationSession, ApplicationRunner
 from autobahn import wamp
+import time
 import os
 
 class RPiAudioPlaybackComponent(ApplicationSession):
@@ -15,8 +16,18 @@ class RPiAudioPlaybackComponent(ApplicationSession):
     @wamp.register(u'com.jeremydyer.residence.rpi.audio.play')
     def play_sound(self):
         print "Playing dummy sound"
-        os.system('mpg321 /home/pi/MyKindOfCrazy.mp3 &')
 
+        # Source file. This will ultimately be present in the JSON payload received by this method.
+        sourceURL = "https://s3.amazonaws.com/makeandbuild/courier/audio/1.wav"
+
+        timestamp = time.time()
+        destfile = '/home/pi/.audio/' + timestamp + ".wav"
+
+        downloadcmd = "wget " + sourceURL + " -p " + destfile
+        os.system(downloadcmd)
+
+        os.system('mpg123 ' + destfile + ' &')
+        os.remove(destfile)
 
 
 if __name__ == '__main__':
