@@ -25,7 +25,7 @@ class RPiAudioPlaybackComponent(ApplicationSession):
         print "Timestamp " + str(timestamp)
         destfile = '/home/pi/.audio/' + str(timestamp) + ".wav"
 
-        downloadcmd = "wget " + sourceURL + " -p " + destfile
+        downloadcmd = "wget " + sourceURL + " -P " + destfile
         print "Running download cmd " + downloadcmd
         os.system(downloadcmd)
         print "S3 download is complete"
