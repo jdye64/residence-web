@@ -20,8 +20,10 @@ class RPiAudioPlaybackComponent(ApplicationSession):
         # Source file. This will ultimately be present in the JSON payload received by this method.
         sourceURL = "https://s3.amazonaws.com/makeandbuild/courier/audio/1.wav"
 
+        print "Source URL " + sourceURL
         timestamp = time.time()
-        destfile = '/home/pi/.audio/' + timestamp + ".wav"
+        print "Timestamp " + str(timestamp)
+        destfile = '/home/pi/.audio/' + str(timestamp) + ".wav"
 
         downloadcmd = "wget " + sourceURL + " -p " + destfile
         print "Running download cmd " + downloadcmd
