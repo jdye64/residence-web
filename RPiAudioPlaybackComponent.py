@@ -18,9 +18,7 @@ class LocalAudioCacheStore:
         print "Audio Cached from " + str(s3Url)
 
         # Create the in-memory cache from all of the files already in the directory.
-        for file in os.listdir(self.cache_dir):
-            print "File " + str(file)
-            self.cachedFilesMap[self.s3url + file] = self.cache_dir + file
+        self.rebuild_inmemory_cache()
 
     def play_cached_file(self, url):
         cache_file = self.cachedFilesMap.get(url)
@@ -29,8 +27,14 @@ class LocalAudioCacheStore:
             self.cachedFilesMap[url] = cache_file
 
         # Plays the cached file
-        #os.system('mpg123 ' + destfile + ' &')
-        os.system('aplay ' + cache_file)
+        file_parts = cache_file.split(".")
+        ext = file_parts[len(file_parts) - 1]
+        print "Audio extension " + str(ext)
+
+        if ext == 'mp3':
+            os.system('mpg123 ' + cache_file + ' &')
+        else:
+            os.system('aplay ' + cache_file)
 
     def cache_audio(self, url):
         print "Downloading and caching the audio file " + str(url)
@@ -45,6 +49,9 @@ class LocalAudioCacheStore:
         print "S3 download is complete"
         return destfile
 
+    def rebuild_inmemory_cache(self):
+        for file in os.listdir(self.cache_dir):
+            self.cachedFilesMap[self.s3url + file] = self.cache_dir + file
 
 class RPiAudioPlaybackComponent(ApplicationSession):
 
