@@ -65,6 +65,7 @@ class RPiAudioPlaybackComponent(ApplicationSession):
     @wamp.register(u'com.jeremydyer.residence.rpi.audio.play')
     def play_sound(self, audio_info):
         self.cache.play_cached_file(audio_info["source_url"])
+        print "sample"
 
 if __name__ == '__main__':
     runner = ApplicationRunner("ws://pi.jeremydyer.me:9000/ws", "realm1")
