@@ -60,12 +60,12 @@ class RPiAudioPlaybackComponent(ApplicationSession):
         self.cache.play_cached_file(sourceURL)
 
 if __name__ == '__main__':
-    #runner = ApplicationRunner("ws://pi.jeremydyer.me:9000/ws", "realm1")
-    #runner.run(RPiAudioPlaybackComponent)
+    runner = ApplicationRunner("ws://pi.jeremydyer.me:9000/ws", "realm1")
+    runner.run(RPiAudioPlaybackComponent)
 
-    test = RPiAudioPlaybackComponent()
-    test.cache.play_cached_file("https://s3.amazonaws.com/makeandbuild/courier/audio/1.wav")
-    test.cache.play_cached_file("https://s3.amazonaws.com/makeandbuild/courier/audio/1.wav")
-    test.cache.play_cached_file("https://s3.amazonaws.com/makeandbuild/courier/audio/2.wav")
-    test.cache.play_cached_file("https://s3.amazonaws.com/makeandbuild/courier/audio/3.wav")
-    test.cache.play_cached_file("https://s3.amazonaws.com/makeandbuild/courier/audio/2.wav")
+    # test = RPiAudioPlaybackComponent()
+    # test.cache.play_cached_file("https://s3.amazonaws.com/makeandbuild/courier/audio/1.wav")
+    # test.cache.play_cached_file("https://s3.amazonaws.com/makeandbuild/courier/audio/1.wav")
+    # test.cache.play_cached_file("https://s3.amazonaws.com/makeandbuild/courier/audio/2.wav")
+    # test.cache.play_cached_file("https://s3.amazonaws.com/makeandbuild/courier/audio/3.wav")
+    # test.cache.play_cached_file("https://s3.amazonaws.com/makeandbuild/courier/audio/2.wav")
