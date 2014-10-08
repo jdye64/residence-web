@@ -22,14 +22,13 @@ class LocalAudioCacheStore:
 
     def play_cached_file(self, url):
         cache_file = self.cachedFilesMap.get(url)
-        if cache_file == None:
+        if cache_file is None:
             cache_file = self.cache_audio(url)
             self.cachedFilesMap[url] = cache_file
 
         # Plays the cached file
         file_parts = cache_file.split(".")
         ext = file_parts[len(file_parts) - 1]
-        print "Audio extension " + str(ext)
 
         if ext == 'mp3':
             os.system('mpg123 ' + cache_file + ' &')
@@ -64,18 +63,9 @@ class RPiAudioPlaybackComponent(ApplicationSession):
         yield self.subscribe(self)
 
     @wamp.register(u'com.jeremydyer.residence.rpi.audio.play')
-    def play_sound(self):
-        # Source file. This will ultimately be present in the JSON payload received by this method.
-        sourceURL = "https://s3.amazonaws.com/makeandbuild/courier/audio/1.wav"
-        self.cache.play_cached_file(sourceURL)
+    def play_sound(self, audio_info):
+        self.cache.play_cached_file(audio_info["source_url"])
 
 if __name__ == '__main__':
     runner = ApplicationRunner("ws://pi.jeremydyer.me:9000/ws", "realm1")
     runner.run(RPiAudioPlaybackComponent)
-
-    # test = RPiAudioPlaybackComponent()
-    # test.cache.play_cached_file("https://s3.amazonaws.com/makeandbuild/courier/audio/1.wav")
-    # test.cache.play_cached_file("https://s3.amazonaws.com/makeandbuild/courier/audio/1.wav")
-    # test.cache.play_cached_file("https://s3.amazonaws.com/makeandbuild/courier/audio/2.wav")
-    # test.cache.play_cached_file("https://s3.amazonaws.com/makeandbuild/courier/audio/3.wav")
-    # test.cache.play_cached_file("https://s3.amazonaws.com/makeandbuild/courier/audio/2.wav")
