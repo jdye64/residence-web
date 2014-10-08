@@ -30,7 +30,8 @@ class RPiAudioPlaybackComponent(ApplicationSession):
         os.system(downloadcmd)
         print "S3 download is complete"
 
-        os.system('mpg123 ' + destfile + ' &')
+        #os.system('mpg123 ' + destfile + ' &')
+        os.system('aplay ' + destfile)
         os.remove(destfile)
         print "Removed cache S3 file"
 
