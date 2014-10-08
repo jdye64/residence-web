@@ -17,6 +17,11 @@ class LocalAudioCacheStore:
         print "Creating Audio Cache Store instance"
         print "Audio Cached from " + str(s3Url)
 
+        # Create the in-memory cache from all of the files already in the directory.
+        for file in os.listdir(self.cache_dir):
+            print "File " + str(file)
+            self.cachedFilesMap[self.s3url + file] = file
+
     def play_cached_file(self, url):
         cache_file = self.cachedFilesMap.get(url)
         if cache_file == None:
@@ -53,8 +58,6 @@ class RPiAudioPlaybackComponent(ApplicationSession):
 
     @wamp.register(u'com.jeremydyer.residence.rpi.audio.play')
     def play_sound(self):
-        print "Playing dummy sound"
-
         # Source file. This will ultimately be present in the JSON payload received by this method.
         sourceURL = "https://s3.amazonaws.com/makeandbuild/courier/audio/1.wav"
         self.cache.play_cached_file(sourceURL)
