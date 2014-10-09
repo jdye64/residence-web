@@ -25,7 +25,7 @@ class RPiWebCamComponent(ApplicationSession):
         cmd = "fswebcam -r 352x288 " + self.image_dir + "/image.jpg"
         os.system(cmd)
 
-        fd = open(self.image_dir + "/this.jpg", "rb")
+        fd = open(self.image_dir + "/image.jpg", "rb")
         encoded_string = base64.b64encode(fd.read())
         return {"image": encoded_string}
 

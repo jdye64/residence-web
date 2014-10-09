@@ -33,3 +33,5 @@ Required Software:
 ```sudo apt-get install mpg321```
 ```sudo modprobe snd_bcm2835```
 ```sudo amixer cset numid=3 1```
+```mpg123 ./{FileName.mp3}```
+```aplay ./{FileName.wav}```
