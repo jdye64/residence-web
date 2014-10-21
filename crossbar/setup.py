@@ -29,16 +29,16 @@
 from setuptools import setup
 
 setup(
-    name = 'hello',
+    name = 'residence',
     version = '0.0.1',
-    description = "'hello' WAMP Component",
+    description = "'residence' WAMP Component",
     platforms = ['Any'],
-    packages = ['hello'],
+    packages = ['residence'],
     include_package_data = True,
     zip_safe = False,
     entry_points = {
         'autobahn.twisted.wamplet': [
-            'backend = hello.hello:AppSession'
+            'backend = residence.residence:AppSession'
         ],
     }
 )

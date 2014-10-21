@@ -7,7 +7,7 @@ from autobahn.twisted.wamp import ApplicationSession, ApplicationRunner
 from autobahn.twisted.util import sleep
 import jsonpickle
 
-from gpio import RPi, RPiHeartBeat
+from common.gpio import RPi, RPiHeartBeat
 
 try:
     import RPi.GPIO as GPIO
