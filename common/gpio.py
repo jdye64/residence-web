@@ -52,9 +52,9 @@ class RPi:
             self.eth0_mac = rpiInfo.getmac("eth0")
             self.secretKey = "123456789qazwsx"
             self.outlets = []
-            self.turnOffOutletRPC = "com.jeremydyer.gpio.power." + str(self.uuid) + ".turnoff"
-            self.turnOnOutletRPC = "com.jeremydyer.gpio.power." + str(self.uuid) + ".turnon"
-            self.updateDeviceRPC = "com.jeremydyer.gpio.residence." + str(self.uuid) + ".update"
+            self.turnOffOutletRPC = "com.jeremydyer.gpio.power." + str(self.uid) + ".turnoff"
+            self.turnOnOutletRPC = "com.jeremydyer.gpio.power." + str(self.uid) + ".turnon"
+            self.updateDeviceRPC = "com.jeremydyer.gpio.residence." + str(self.uid) + ".update"
             self.city = "Atlanta"
             self.state = "GA"
             self.zip = 30306
