@@ -52,26 +52,26 @@ class RPi:
             self.eth0_mac = rpiInfo.getmac("eth0")
             self.secretKey = "123456789qazwsx"
             self.outlets = []
-            self.turnOffOutletRPC = None
-            self.turnOnOutletRPC = None
-            self.updateDeviceRPC = None
-            self.city = None
-            self.state = None
-            self.zip = None
-            self.address1 = None
-            self.address2 = None
-            self.location_name = None    # Friendly name associated with the physical address of the device
-            self.room_name = None # Friendly name associated with the room that the RPi is located in the physical address
+            self.turnOffOutletRPC = "com.jeremydyer.gpio.power." + str(self.uuid) + ".turnoff"
+            self.turnOnOutletRPC = "com.jeremydyer.gpio.power." + str(self.uuid) + ".turnon"
+            self.updateDeviceRPC = "com.jeremydyer.gpio.residence." + str(self.uuid) + ".update"
+            self.city = "Atlanta"
+            self.state = "GA"
+            self.zip = 30306
+            self.address1 = "1234 Made Up Address"
+            self.address2 = ""
+            self.location_name = "ATL Apartment"    # Friendly name associated with the physical address of the device
+            self.room_name = "" # Friendly name associated with the room that the RPi is located in the physical address
 
             #Creates 8 filler GPIO outlets since all of the devices I have currently built are 8 outlets.
-            self.outlets.append(GPIO(0))
-            self.outlets.append(GPIO(1))
-            self.outlets.append(GPIO(2))
-            self.outlets.append(GPIO(3))
-            self.outlets.append(GPIO(4))
-            self.outlets.append(GPIO(5))
-            self.outlets.append(GPIO(6))
-            self.outlets.append(GPIO(7))
+            self.outlets.append(GPIO("A"))
+            self.outlets.append(GPIO("B"))
+            self.outlets.append(GPIO("C"))
+            self.outlets.append(GPIO("D"))
+            self.outlets.append(GPIO("E"))
+            self.outlets.append(GPIO("F"))
+            self.outlets.append(GPIO("G"))
+            self.outlets.append(GPIO("H"))
 
             # Saves/Creates the current random-ish configuration
             self.save()
@@ -135,7 +135,7 @@ class GPIO:
 
     def from_json(self, json_data):
         saved_data = jsonpickle.decode(json_data)
-        self.outlet = saved_data.portsNumber
+        self.outlet = saved_data.outlet
         self.on = saved_data.on
         self.outletDescription = saved_data.outletDescription
 
