@@ -9,7 +9,7 @@
          },
          "realms": [
             {
-               "name": "realm1",
+               "name": "residence",
                "roles": [
                   {
                      "name": "anonymous",
@@ -54,7 +54,7 @@
             {
                "type": "class",
                "classname": "residence.RPiDeviceRegistryComponent.RPiDeviceRegistryComponent",
-               "realm": "realm1",
+               "realm": "residence",
                "transport": {
                   "type": "websocket",
                   "endpoint": {

@@ -29,9 +29,9 @@ found here ```http://www.raspberrypi.org/documentation/usage/webcams/```
 the sound using the speakers connected to the RPi device. This could either be 3.5mm headphones speakers or that sound could
 go through the HDMI output to play on nicer speakers or through a TV.
 Required Software:
-```sudo apt-get install alsa-utils```
-```sudo apt-get install mpg321```
-```sudo modprobe snd_bcm2835```
-```sudo amixer cset numid=3 1```
-```mpg123 ./{FileName.mp3}```
-```aplay ./{FileName.wav}```
+* ```sudo apt-get install alsa-utils```
+* ```sudo apt-get install mpg321```
+* ```sudo modprobe snd_bcm2835```
+* ```sudo amixer cset numid=3 1```
+* ```mpg123 ./{FileName.mp3}```
+* ```aplay ./{FileName.wav}```
