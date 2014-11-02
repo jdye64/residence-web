@@ -31,5 +31,5 @@ class RPiWebCamComponent(ApplicationSession):
 
 
 if __name__ == '__main__':
-    runner = ApplicationRunner("ws://pi.jeremydyer.me:9000/ws", "realm1")
+    runner = ApplicationRunner("ws://pi.jeremydyer.me:9000/ws", "residence")
     runner.run(RPiWebCamComponent)
