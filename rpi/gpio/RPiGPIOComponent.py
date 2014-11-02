@@ -32,7 +32,14 @@ class RPiComponent(ApplicationSession):
     heartbeatinterval = 5   #Measured in seconds
 
     gpio_mode = GPIO.BOARD
-    board_gpio_channels = [7, 11, 12, 13, 15, 16, 18, 22]
+    all_gpio_channels = [3, 5, 7, 8, 10, 11, 12, 13, 15, 16, 18, 19, 21, 22, 23, 24, 26]
+
+    # Outlets are laid out on the board physically just like they are listed below
+    # A = 5, B = 8, C = 11, D = 13
+    # E = 3, F = 7, G = 10, H = 12
+    board_gpio_channels = [3, 5, 7, 8, 10, 11, 12, 13]
+    # Maps the user friendly outlet values to their underlying GPIO outlet values
+    outlet_to_gpio_mapping = {"A": 5, "B": 8, "C": 11, "D": 13, "E": 3, "F": 7, "G": 10, "H": 12}
 
     GPIO_OFF = True
     GPIO_ON = False
@@ -80,18 +87,15 @@ class RPiComponent(ApplicationSession):
         yield self.publish('com.jeremydyer.residence.rpi.update.notify', responsejson)
 
     @inlineCallbacks
-    def turn_on_outlet(self, portNumber):
-        print "Turning ON GPIO outlet"
-        print "Must perform the actual GPIO commands here on the RPi device ..."
-        print "PortNumber " + str(portNumber) + " Channel mapped to " + str(self.board_gpio_channels[portNumber])
-        GPIO.output(self.board_gpio_channels[portNumber], self.GPIO_ON)
+    def turn_on_outlet(self, outlet):
+        print "Turning ON GPIO outlet " + outlet
+        GPIO.output(self.outlet_to_gpio_mapping[outlet], self.GPIO_ON)
         yield self.publish('com.jeremydyer.residence.rpi.outlet.update.dummy', 'RaspberryPI GPIO outlet has been turned ON')
 
     @inlineCallbacks
-    def turn_off_outlet(self, portNumber):
-        print "Turning OFF GPIO outlet"
-        print "PortNumber " + str(portNumber) + " Channel mapped to " + str(self.board_gpio_channels[portNumber])
-        GPIO.output(self.board_gpio_channels[portNumber], self.GPIO_OFF)
+    def turn_off_outlet(self, outlet):
+        print "Turning OFF GPIO outlet " + outlet
+        GPIO.output(self.outlet_to_gpio_mapping[outlet], self.GPIO_OFF)
         yield self.publish('com.jeremydyer.residence.rpi.outlet.update.dummy', 'RaspberryPI GPIO outlet has been turned OFF')
 
 if __name__ == '__main__':

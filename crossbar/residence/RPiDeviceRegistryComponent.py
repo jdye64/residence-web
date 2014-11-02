@@ -81,7 +81,7 @@ class RPiDeviceRegistryComponent(ApplicationSession):
         while True:
             offlinedevices = yield self.devReg.checkForOfflineDevices()
             for off in offlinedevices:
-                # PULISH a message and remove the device from the registry
+                # PUBLISH a message and remove the device from the registry
                 yield self.publish(u'com.jeremydyer.residence.rpi.offline', jsonpickle.encode(off))
                 self.devReg.removeRPiFromRegistryByUid(off.uid)
 

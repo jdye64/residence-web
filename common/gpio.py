@@ -124,18 +124,18 @@ class RPi:
 # Defines a generic GPIO outlet on a raspberry pi device
 class GPIO:
 
-    portsNumber = None
+    outlet = None  # This is the A, B, C, D, E, F, G, or H value that is labeled on the physically GPIO device
     on = 0
     outletDescription = None
 
-    def __init__(self, portNum):
-        self.portNumber = portNum
+    def __init__(self, outlet):
+        self.outlet = outlet
         self.on = 0
-        self.outletDescription = "Test Description " + str(portNum)
+        self.outletDescription = "Test Description " + str(outlet)
 
     def from_json(self, json_data):
         saved_data = jsonpickle.decode(json_data)
-        self.portsNumber = saved_data.portsNumber
+        self.outlet = saved_data.portsNumber
         self.on = saved_data.on
         self.outletDescription = saved_data.outletDescription
 
