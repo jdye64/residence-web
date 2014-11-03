@@ -1,3 +1,12 @@
+import sys
+import os
+
+# Adds the coffee root directory to the PYTHONPATH so that common modules can be shared.
+# Note I know this is really ugly BUT crossbar.io has a bug where the PYTHONPATH cannot
+# be set in the config.json currently
+add_on_dir = os.path.dirname(os.path.dirname(os.path.abspath(os.getcwd())))  # Gets 2 parents dirs up to the root folder
+sys.path.append(add_on_dir)
+
 # Component for keeping track of the online RPi Devices in the session.
 
 import time
