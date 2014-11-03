@@ -55,13 +55,14 @@ class DeviceRegistry:
         #Loop through all of the devices and check for the devices that have not responded in a certain threshold
         offlinedevices = []
         for rpi in self.rpiDevices:
-            if not rpi.lastheartbeat:
-                 #This is the first heartbeat for this device so lets update it.
-                rpi.lastheartbeat = time.time()
-            else:
+            try:
                 if (time.time() - rpi.lastheartbeat) > self.heartbeatmaxthreshold:
                     #Add the RPi Device to the list of offline devices.
                     offlinedevices.append(rpi)
+            except AttributeError:
+                #This is the first heartbeat for this device so lets update it.
+                rpi.lastheartbeat = time.time()
+
 
         return offlinedevices
 
